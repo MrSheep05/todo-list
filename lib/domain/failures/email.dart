@@ -2,12 +2,12 @@ import 'package:todo_list/domain/objects/index.dart';
 
 sealed class EmailFailure extends ValueFailure {}
 
-class NoData extends EmailFailure {
+class EmailNoData extends EmailFailure {
   @override
   String get message => "No data in email";
 }
 
-class InvalidString extends EmailFailure {
+class EmailInvalidString extends EmailFailure {
   @override
   String get message => "This string is not email";
 }

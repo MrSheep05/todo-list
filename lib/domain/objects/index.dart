@@ -2,7 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:todo_list/domain/failures/email.dart';
+import 'package:todo_list/domain/failures/name.dart';
+import 'package:todo_list/domain/failures/password.dart';
 import 'package:todo_list/domain/validated/email.dart';
+import 'package:todo_list/domain/validated/name.dart';
+import 'package:todo_list/domain/validated/password.dart';
 
 class ValueObjectException implements Exception {
   final ValueFailure failure;
@@ -41,6 +45,8 @@ abstract class ValueObject<T, E extends ValueFailure> implements Equatable {
     );
   }
 
+  TaskEither<E, T> get getValueTask => TaskEither.fromEither(value);
+
   bool isValid() => value.isRight();
 
   @override
@@ -59,4 +65,26 @@ class EmailObject extends ValueObject<Email, EmailFailure> {
   }
 
   const EmailObject._(this.value);
+}
+
+class NameObject extends ValueObject<Name, NameFailure> {
+  @override
+  final Either<NameFailure, Name> value;
+
+  factory NameObject(String input) {
+    return NameObject._(Name.validate(input));
+  }
+
+  const NameObject._(this.value);
+}
+
+class PasswordObject extends ValueObject<Password, PasswordFailure> {
+  @override
+  final Either<PasswordFailure, Password> value;
+
+  factory PasswordObject(String input) {
+    return PasswordObject._(Password.validate(input));
+  }
+
+  const PasswordObject._(this.value);
 }

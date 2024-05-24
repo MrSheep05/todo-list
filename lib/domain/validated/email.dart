@@ -7,11 +7,7 @@ class Email {
 
   static Either<EmailFailure, Email> validate(String input) {
     const emailRegex = r"""^[a-zA-Z0-9.!#$%&‘*+/=?^_`{|}~-]+@[a-zA-Z0-9-_]+\.[a-zA-Z]+$""";
-    if (input.isEmpty) return left(NoData());
-    if (RegExp(emailRegex).hasMatch(input)) {
-      return right(Email._(input));
-    } else {
-      return left(InvalidString());
-    }
+    if (input.isEmpty) return left(EmailNoData());
+    return RegExp(emailRegex).hasMatch(input) ? right(Email._(input)) : left(EmailInvalidString());
   }
 }
