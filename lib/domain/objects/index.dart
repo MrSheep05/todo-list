@@ -7,6 +7,8 @@ import 'package:todo_list/domain/failures/password.dart';
 import 'package:todo_list/domain/validated/email.dart';
 import 'package:todo_list/domain/validated/name.dart';
 import 'package:todo_list/domain/validated/password.dart';
+import 'package:todo_list/domain/validated/unique_id.dart';
+import 'package:uuid/uuid.dart';
 
 class ValueObjectException implements Exception {
   final ValueFailure failure;
@@ -14,6 +16,7 @@ class ValueObjectException implements Exception {
 }
 
 abstract class ValueFailure {
+  const ValueFailure();
   String get message;
 }
 
@@ -87,4 +90,19 @@ class PasswordObject extends ValueObject<Password, PasswordFailure> {
   }
 
   const PasswordObject._(this.value);
+}
+
+class UniqueIdObject extends ValueObject<UniqueId, ValueFailure> {
+  @override
+  final Either<ValueFailure, UniqueId> value;
+
+  factory UniqueIdObject() {
+    return UniqueIdObject._(UniqueId.validate(const Uuid().v1()));
+  }
+
+  factory UniqueIdObject.fromString(String input) {
+    return UniqueIdObject._(UniqueId.validate(input));
+  }
+
+  const UniqueIdObject._(this.value);
 }

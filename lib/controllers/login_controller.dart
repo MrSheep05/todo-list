@@ -2,13 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:signals/signals.dart';
+import 'package:todo_list/controllers/usecases/sign_in_task.dart';
 import 'package:todo_list/core/dialog_api.dart';
-import 'package:todo_list/domain/auth_exception_status.dart';
-import 'package:todo_list/domain/failures/email.dart';
-import 'package:todo_list/domain/failures/password.dart';
 import 'package:todo_list/domain/objects/index.dart';
-import 'package:todo_list/domain/validated/email.dart';
-import 'package:todo_list/domain/validated/password.dart';
 
 class LoginController {
   final loginError = signal<bool>(false);
@@ -25,39 +21,52 @@ class LoginController {
     await DialogAPI().showLoading();
     var emailObject = EmailObject(loginController.text.trim());
     var passwordObject = PasswordObject(passwordController.text);
-    var signTask = emailObject.getValueTask.mapLeft<ValueFailure>((failure) {
-      DialogAPI().importantSnackbar(
-          switch (failure) {
-            EmailNoData() => "Login nie może być pusty",
-            EmailInvalidString() => "Login musi być emailem",
-          },
-          severity: Severity.warning);
-      loginError.set(true);
-      return failure;
-    }).flatMap((email) => passwordObject.getValueTask.mapLeft((failure) {
-          DialogAPI().importantSnackbar(
-              switch (failure) {
-                PasswordNoData() => "Hasło nie może być puste",
-                PasswordTooWeak() => "Hasło jest za słabe",
-                PasswordTooShort() => "Hasło musi mieć co najmniej 8 znaków",
-              },
-              severity: Severity.warning);
-          passwordError.set(true);
-          return failure;
-        }).flatMap((password) => TaskEither.fromTask(signInTask(email, password))));
-    await signTask.run();
+    await _signInTask(emailObject, passwordObject).map((_) {
+      loginController.clear();
+      passwordController.clear();
+    }).run();
     DialogAPI().dismissLoading();
   }
 
-  Task<void> signInTask(Email email, Password password) {
-    return TaskEither.tryCatch(
-        () async => await auth.signInWithEmailAndPassword(email: email.value, password: password.value),
-        (error, stackTrace) {
-      print("ERROR, ${error is FirebaseAuthException ? error.code : "NULL"}");
-      return error is FirebaseAuthException ? AuthExceptionStatus.getStatus(error.code) : AuthExceptionStatus.Undefined;
-    }).match((l) {
-      print(l);
-      DialogAPI().importantSnackbar(l.message);
-    }, (r) => {});
+  Future<void> registerIn() async {
+    await DialogAPI().showLoading();
+    var emailObject = EmailObject(loginController.text.trim());
+    var passwordObject = PasswordObject(passwordController.text);
+    var nameObject = NameObject(usernameController.text.trim());
+    await _registerInTask(nameObject, emailObject, passwordObject).map((_) {
+      loginController.clear();
+      passwordController.clear();
+      usernameController.clear();
+    }).run();
+    DialogAPI().dismissLoading();
+  }
+
+  TaskEither<String, void> _registerInTask(
+      NameObject nameObject, EmailObject emailObject, PasswordObject passwordObject) {
+    return _validationTask(nameObject, usernameError).flatMap((username) => _validationTask(emailObject, loginError)
+        .flatMap((email) => _validationTask(passwordObject, passwordError)
+            .flatMap((password) => auth.registerInTask(email, password).mapLeft((l) {
+                      DialogAPI().importantSnackbar(l);
+                      return l;
+                    })
+                // .flatMap((userCredentials) => )
+                )));
+  }
+
+  TaskEither<String, void> _signInTask(EmailObject emailObject, PasswordObject passwordObject) {
+    return _validationTask(emailObject, loginError).flatMap((email) => _validationTask(passwordObject, passwordError)
+            .flatMap((password) => auth.signInTask(email, password))
+            .mapLeft((l) {
+          DialogAPI().importantSnackbar(l);
+          return l;
+        }));
+  }
+
+  TaskEither<String, T> _validationTask<T>(ValueObject<T, ValueFailure> object, Signal<bool> setError) {
+    return object.getValueTask.mapLeft((failure) {
+      DialogAPI().importantSnackbar(failure.message, severity: Severity.warning);
+      setError.set(true);
+      return failure.message;
+    });
   }
 }

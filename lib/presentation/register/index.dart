@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:signals/signals_flutter.dart';
 import 'package:todo_list/controllers/login_controller.dart';
 import 'package:todo_list/core/colors.dart';
 import 'package:todo_list/core/size.dart';
@@ -62,7 +61,10 @@ class RegisterPage extends StatelessWidget {
                   SizedBox(
                     height: context.vmin(0.1),
                   ),
-                  const Button("Continue"),
+                  Button(
+                    "Continue",
+                    onPressed: loginController.registerIn,
+                  ),
                   SizedBox(
                     height: context.vmin(0.1),
                   ),

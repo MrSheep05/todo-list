@@ -8,9 +8,9 @@ class Name {
   const Name._(this.value);
 
   static Either<NameFailure, Name> validate(String input) {
-    if (input.isEmpty) return left(NameNoData());
-    if (input.length > maxLength) return left(NameTooLong());
-    if (input.length < minLength) return left(NameTooShort());
+    if (input.isEmpty) return left(const NameFailure.noData());
+    if (input.length > maxLength) return left(const NameFailure.tooLong());
+    if (input.length < minLength) return left(const NameFailure.tooShort());
     return right(Name._(input));
   }
 }

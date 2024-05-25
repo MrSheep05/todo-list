@@ -1,13 +1,15 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todo_list/domain/objects/index.dart';
 
-sealed class EmailFailure extends ValueFailure {}
+part 'email.freezed.dart';
 
-class EmailNoData extends EmailFailure {
-  @override
-  String get message => "No data in email";
-}
+@freezed
+class EmailFailure extends ValueFailure with _$EmailFailure {
+  const EmailFailure._();
 
-class EmailInvalidString extends EmailFailure {
+  const factory EmailFailure.noData() = _NoData;
+  const factory EmailFailure.invalidString() = _InvalidString;
+
   @override
-  String get message => "This string is not email";
+  String get message => map(noData: (_) => "Login nie może być pusty", invalidString: (_) => "Login musi być emailem");
 }

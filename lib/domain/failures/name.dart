@@ -1,18 +1,19 @@
 import 'package:todo_list/domain/objects/index.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class NameFailure extends ValueFailure {}
+part 'name.freezed.dart';
 
-class NameNoData extends NameFailure {
+@freezed
+class NameFailure extends ValueFailure with _$NameFailure {
+  const NameFailure._();
+
+  const factory NameFailure.noData() = _NoData;
+  const factory NameFailure.tooLong() = _TooLong;
+  const factory NameFailure.tooShort() = _TooShort;
+
   @override
-  String get message => "No data in name";
-}
-
-class NameTooLong extends NameFailure {
-  @override
-  String get message => "Name is too long";
-}
-
-class NameTooShort extends NameFailure {
-  @override
-  String get message => "Name is too short";
+  String get message => map(
+      noData: (_) => "Nazwa nie może być pusta",
+      tooLong: (_) => "Nazwa jest za długa",
+      tooShort: (_) => "Nazwa jest za krótka");
 }

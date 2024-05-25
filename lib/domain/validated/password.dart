@@ -8,8 +8,8 @@ class Password {
 
   static Either<PasswordFailure, Password> validate(String input) {
     const passwordRegex = r"""^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$""";
-    if (input.isEmpty) return left(PasswordNoData());
-    if (input.length < minLength) return left(PasswordTooShort());
-    return RegExp(passwordRegex).hasMatch(input) ? right(Password._(input)) : left(PasswordTooWeak());
+    if (input.isEmpty) return left(const PasswordFailure.noData());
+    if (input.length < minLength) return left(const PasswordFailure.tooShort());
+    return RegExp(passwordRegex).hasMatch(input) ? right(Password._(input)) : left(const PasswordFailure.tooWeak());
   }
 }
