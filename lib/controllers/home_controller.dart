@@ -1,6 +1,6 @@
 import 'package:signals/signals.dart';
 import 'package:todo_list/domain/account.dart';
-import 'package:todo_list/infrastructure/models/istorage.repository.dart';
+import 'package:todo_list/infrastructure/models/istorage_repository.dart';
 
 class HomeController {
   final StorageRepository storageRepo;

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:todo_list/controllers/home_controller.dart';
 import 'package:todo_list/controllers/login_controller.dart';
 import 'package:todo_list/controllers/splash_controller.dart';
-import 'package:todo_list/infrastructure/models/istorage.repository.dart';
+import 'package:todo_list/infrastructure/models/istorage_repository.dart';
 import 'package:todo_list/infrastructure/models/iuser_repository.dart';
 import 'package:todo_list/infrastructure/repository/account_repository.dart';
 import 'package:todo_list/infrastructure/repository/storage_repository.dart';

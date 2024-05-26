@@ -6,7 +6,7 @@ import 'package:signals/signals.dart';
 import 'package:todo_list/controllers/home_controller.dart';
 
 import 'package:todo_list/core/dialog_api.dart';
-import 'package:todo_list/infrastructure/models/istorage.repository.dart';
+import 'package:todo_list/infrastructure/models/istorage_repository.dart';
 import 'package:todo_list/infrastructure/models/iuser_repository.dart';
 import 'package:todo_list/routes/paths.dart';
 

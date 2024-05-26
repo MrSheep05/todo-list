@@ -114,11 +114,6 @@ class _$CompletedImpl extends _Completed {
   const _$CompletedImpl() : super._();
 
   @override
-  String toString() {
-    return 'TaskStatus.completed()';
-  }
-
-  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$CompletedImpl);
@@ -233,11 +228,6 @@ class __$$OngoingImplCopyWithImpl<$Res>
 
 class _$OngoingImpl extends _Ongoing {
   const _$OngoingImpl() : super._();
-
-  @override
-  String toString() {
-    return 'TaskStatus.ongoing()';
-  }
 
   @override
   bool operator ==(Object other) {
@@ -356,11 +346,6 @@ class _$inProcessImpl extends inProcess {
   const _$inProcessImpl() : super._();
 
   @override
-  String toString() {
-    return 'TaskStatus.inProcess()';
-  }
-
-  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$inProcessImpl);
@@ -477,11 +462,6 @@ class _$CanceledImpl extends Canceled {
   const _$CanceledImpl() : super._();
 
   @override
-  String toString() {
-    return 'TaskStatus.canceled()';
-  }
-
-  @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$CanceledImpl);
@@ -596,11 +576,6 @@ class __$$ErrorImplCopyWithImpl<$Res>
 
 class _$ErrorImpl extends _Error {
   const _$ErrorImpl() : super._();
-
-  @override
-  String toString() {
-    return 'TaskStatus.error()';
-  }
 
   @override
   bool operator ==(Object other) {

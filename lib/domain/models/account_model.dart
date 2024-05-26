@@ -22,7 +22,7 @@ class AccountModel with _$AccountModel {
 
   factory AccountModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
     var data = doc.data()!;
-    data.putIfAbsent("id", () => doc.id);
+    data.putIfAbsent("uid", () => doc.id);
     return AccountModel.fromJson(data);
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:todo_list/core/colors.dart';
 
 part 'status.freezed.dart';
 
@@ -22,6 +21,11 @@ class TaskStatus with _$TaskStatus {
   };
 
   factory TaskStatus.fromString(String status) => _jsonMap[status] ?? const TaskStatus.error();
+
+  @override
+  String toString() {
+    return _jsonMap.keys.firstWhere((element) => _jsonMap[element] == this, orElse: () => "error");
+  }
 
   IconData get icon => map(
       completed: (_) => Icons.check_rounded,

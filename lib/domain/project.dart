@@ -24,9 +24,9 @@ class Project {
                 timestamp, status));
   }
 
-  static TaskOption<Project> createProject(UniqueIdObject uniqueIdObject, NameObject nameObject,
-      DescriptionObject descriptionObject, DateTime timestamp, TaskStatus status) {
-    return TaskOption.tryCatch(() async => Project(uniqueIdObject, nameObject, timestamp, descriptionObject, status));
+  static TaskOption<Project> createProject(
+      NameObject nameObject, DescriptionObject descriptionObject, DateTime timestamp, TaskStatus status) {
+    return TaskOption.tryCatch(() async => Project(UniqueIdObject(), nameObject, timestamp, descriptionObject, status));
   }
 
   String get id => _id.value;

@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:todo_list/core/storage_keys.dart';
 import 'package:todo_list/domain/account.dart';
 import 'package:todo_list/domain/models/account_model.dart';
-import 'package:todo_list/infrastructure/models/istorage.repository.dart';
+import 'package:todo_list/infrastructure/models/istorage_repository.dart';
 
 class LocalStorageRepo extends StorageRepository {
   final storage = GetStorage();
@@ -20,4 +20,7 @@ class LocalStorageRepo extends StorageRepository {
             () => TaskOption.tryCatch(() async => await storage.write(StorageKeys.ACCONT_USERNAME, account.username)))
         .map((_) => unit);
   }
+
+  @override
+  Option<String> get uid => Option.fromNullable(storage.read(StorageKeys.ACCONT_UID));
 }
