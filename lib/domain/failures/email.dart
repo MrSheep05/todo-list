@@ -11,5 +11,5 @@ class EmailFailure extends ValueFailure with _$EmailFailure {
   const factory EmailFailure.invalidString() = _InvalidString;
 
   @override
-  String get message => map(noData: (_) => "Login nie może być pusty", invalidString: (_) => "Login musi być emailem");
+  String get message => map(noData: (_) => "Login cannot be empty", invalidString: (_) => "Login must be an email");
 }

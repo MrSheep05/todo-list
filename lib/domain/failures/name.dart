@@ -13,7 +13,5 @@ class NameFailure extends ValueFailure with _$NameFailure {
 
   @override
   String get message => map(
-      noData: (_) => "Nazwa nie może być pusta",
-      tooLong: (_) => "Nazwa jest za długa",
-      tooShort: (_) => "Nazwa jest za krótka");
+      noData: (_) => "Name cannot be empty", tooLong: (_) => "Name is too long", tooShort: (_) => "Name is too short");
 }

@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:todo_list/domain/failures/description.dart';
 import 'package:todo_list/domain/failures/email.dart';
 import 'package:todo_list/domain/failures/name.dart';
 import 'package:todo_list/domain/failures/password.dart';
 import 'package:todo_list/domain/failures/unique_id.dart';
+import 'package:todo_list/domain/validated/description.dart';
 import 'package:todo_list/domain/validated/email.dart';
 import 'package:todo_list/domain/validated/name.dart';
 import 'package:todo_list/domain/validated/password.dart';
@@ -128,4 +130,18 @@ class UniqueIdObject extends ValueObject<UniqueId, UniqueIdFailure> {
     return input != null ? UniqueIdObject.fromString(input) : UniqueIdObject._(left(const UniqueIdFailure.noData()));
   }
   const UniqueIdObject._(this.value);
+}
+
+class DescriptionObject extends ValueObject<Description, DescriptionFailure> {
+  @override
+  final Either<DescriptionFailure, Description> value;
+
+  factory DescriptionObject(String input) {
+    return DescriptionObject._(Description.validate(input));
+  }
+
+  factory DescriptionObject.fromNullable(String? input) {
+    return input != null ? DescriptionObject(input) : DescriptionObject._(left(const DescriptionFailure.noData()));
+  }
+  const DescriptionObject._(this.value);
 }

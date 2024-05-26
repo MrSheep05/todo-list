@@ -25,11 +25,10 @@ class LoginController {
     await DialogAPI().showLoading();
     var emailObject = EmailObject(loginController.text.trim());
     var passwordObject = PasswordObject(passwordController.text);
-    await _signInTask(emailObject, passwordObject).map((_) {
+    await _signInTask(emailObject, passwordObject).mapLeft((l) => DialogAPI().dismissLoading()).map((_) {
       loginController.clear();
       passwordController.clear();
     }).run();
-    DialogAPI().dismissLoading();
   }
 
   Future<void> registerIn() async {
@@ -37,12 +36,13 @@ class LoginController {
     var emailObject = EmailObject(loginController.text.trim());
     var passwordObject = PasswordObject(passwordController.text);
     var nameObject = NameObject(usernameController.text.trim());
-    await _registerInTask(nameObject, emailObject, passwordObject).map((_) {
+    await _registerInTask(nameObject, emailObject, passwordObject)
+        .mapLeft((l) => DialogAPI().dismissLoading())
+        .map((_) {
       loginController.clear();
       passwordController.clear();
       usernameController.clear();
     }).run();
-    DialogAPI().dismissLoading();
   }
 
   TaskEither<String, void> _registerInTask(

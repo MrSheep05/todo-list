@@ -13,7 +13,7 @@ class PasswordFailure extends ValueFailure with _$PasswordFailure {
 
   @override
   String get message => map(
-      noData: (_) => "Hasło nie może być puste",
-      tooWeak: (_) => "Hasło jest za słabe",
-      tooShort: (_) => "Hasło musi mieć co najmniej 8 znaków");
+      noData: (_) => "Password cannot be empty",
+      tooWeak: (_) => "Password is too weak",
+      tooShort: (_) => "Password must be at least 8 characters long");
 }
