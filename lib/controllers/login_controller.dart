@@ -4,9 +4,13 @@ import 'package:fpdart/fpdart.dart';
 import 'package:signals/signals.dart';
 import 'package:todo_list/controllers/usecases/sign_in_task.dart';
 import 'package:todo_list/core/dialog_api.dart';
+import 'package:todo_list/domain/models/account_model.dart';
 import 'package:todo_list/domain/objects/index.dart';
+import 'package:todo_list/infrastructure/models/iuser_repository.dart';
 
 class LoginController {
+  final AccountRepository accountRepo;
+
   final loginError = signal<bool>(false);
   final passwordError = signal<bool>(false);
   final usernameError = signal<bool>(false);
@@ -15,7 +19,7 @@ class LoginController {
   final usernameController = TextEditingController();
   final auth = FirebaseAuth.instance;
 
-  LoginController();
+  LoginController(this.accountRepo);
 
   Future<void> signIn() async {
     await DialogAPI().showLoading();
@@ -44,13 +48,21 @@ class LoginController {
   TaskEither<String, void> _registerInTask(
       NameObject nameObject, EmailObject emailObject, PasswordObject passwordObject) {
     return _validationTask(nameObject, usernameError).flatMap((username) => _validationTask(emailObject, loginError)
-        .flatMap((email) => _validationTask(passwordObject, passwordError)
-            .flatMap((password) => auth.registerInTask(email, password).mapLeft((l) {
-                      DialogAPI().importantSnackbar(l);
-                      return l;
-                    })
-                // .flatMap((userCredentials) => )
-                )));
+        .flatMap((email) =>
+            _validationTask(passwordObject, passwordError).flatMap((password) => auth
+                    .registerInTask(email, password)
+                    .mapLeft((l) {
+                  DialogAPI().importantSnackbar(l);
+                  return l;
+                }).flatMap(
+                        (userCredentials) =>
+                            TaskEither.tryCatch(
+                                () async => AccountModel.fromCredentials(userCredentials, username.value).toDomain(),
+                                (error, s) =>
+                                    "").flatMap((account) => accountRepo.saveAccountTask(account).mapLeft((l) {
+                                  DialogAPI().importantSnackbar("Problem z stworzeniem konta w bazie");
+                                  return l.message;
+                                }))))));
   }
 
   TaskEither<String, void> _signInTask(EmailObject emailObject, PasswordObject passwordObject) {

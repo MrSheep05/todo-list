@@ -11,9 +11,9 @@ class Account {
   const Account._(this._uid, this._email, this._username);
 
   factory Account(UniqueIdObject uidObject, NameObject nameObject, EmailObject emailObject) {
-    return uidObject.failureOrUnit
-        .andThen(() => nameObject.failureOrUnit)
-        .andThen(() => emailObject.failureOrUnit)
+    return uidObject.valueFailureOrUnit
+        .andThen(() => nameObject.valueFailureOrUnit)
+        .andThen(() => emailObject.valueFailureOrUnit)
         .fold((l) => throw ValueObjectException(l),
             (r) => Account._(uidObject.getOrCrash(), emailObject.getOrCrash(), nameObject.getOrCrash()));
   }

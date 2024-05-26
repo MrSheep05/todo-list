@@ -8,9 +8,9 @@ import 'package:todo_list/core/colors.dart';
 import 'package:todo_list/core/dialog_api.dart';
 
 void main() async {
-  setUp();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  setUp();
   runApp(MainApp());
 }
 

@@ -4,6 +4,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:todo_list/domain/failures/email.dart';
 import 'package:todo_list/domain/failures/name.dart';
 import 'package:todo_list/domain/failures/password.dart';
+import 'package:todo_list/domain/failures/unique_id.dart';
 import 'package:todo_list/domain/validated/email.dart';
 import 'package:todo_list/domain/validated/name.dart';
 import 'package:todo_list/domain/validated/password.dart';
@@ -13,6 +14,12 @@ import 'package:uuid/uuid.dart';
 class ValueObjectException implements Exception {
   final ValueFailure failure;
   const ValueObjectException(this.failure);
+}
+
+class ConvertDomainModelException implements Exception {
+  final String message;
+  final Object error;
+  const ConvertDomainModelException(this.message, this.error);
 }
 
 abstract class ValueFailure {
@@ -48,6 +55,13 @@ abstract class ValueObject<T, E extends ValueFailure> implements Equatable {
     );
   }
 
+  Either<ValueFailure, Unit> get valueFailureOrUnit {
+    return value.fold(
+      (l) => left(l),
+      (r) => right(unit),
+    );
+  }
+
   TaskEither<E, T> get getValueTask => TaskEither.fromEither(value);
 
   bool isValid() => value.isRight();
@@ -67,6 +81,9 @@ class EmailObject extends ValueObject<Email, EmailFailure> {
     return EmailObject._(Email.validate(input));
   }
 
+  factory EmailObject.fromNullable(String? input) {
+    return input != null ? EmailObject(input) : EmailObject._(left(const EmailFailure.noData()));
+  }
   const EmailObject._(this.value);
 }
 
@@ -78,6 +95,9 @@ class NameObject extends ValueObject<Name, NameFailure> {
     return NameObject._(Name.validate(input));
   }
 
+  factory NameObject.fromNullable(String? input) {
+    return input != null ? NameObject(input) : NameObject._(left(const NameFailure.noData()));
+  }
   const NameObject._(this.value);
 }
 
@@ -92,9 +112,9 @@ class PasswordObject extends ValueObject<Password, PasswordFailure> {
   const PasswordObject._(this.value);
 }
 
-class UniqueIdObject extends ValueObject<UniqueId, ValueFailure> {
+class UniqueIdObject extends ValueObject<UniqueId, UniqueIdFailure> {
   @override
-  final Either<ValueFailure, UniqueId> value;
+  final Either<UniqueIdFailure, UniqueId> value;
 
   factory UniqueIdObject() {
     return UniqueIdObject._(UniqueId.validate(const Uuid().v1()));
@@ -104,5 +124,8 @@ class UniqueIdObject extends ValueObject<UniqueId, ValueFailure> {
     return UniqueIdObject._(UniqueId.validate(input));
   }
 
+  factory UniqueIdObject.fromNullable(String? input) {
+    return input != null ? UniqueIdObject.fromString(input) : UniqueIdObject._(left(const UniqueIdFailure.noData()));
+  }
   const UniqueIdObject._(this.value);
 }

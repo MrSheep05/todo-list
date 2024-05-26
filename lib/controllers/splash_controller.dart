@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:signals/signals.dart';
+import 'package:todo_list/infrastructure/models/iuser_repository.dart';
 import 'package:todo_list/routes/paths.dart';
 
 var auth = FirebaseAuth.instance;
 
 class SplashController {
-  final userStream = streamSignal(auth.userChanges);
+  final AccountRepository accountRepo;
+  final userStream = streamSignal(auth.userChanges, initialValue: auth.currentUser);
 
   User? get user => userStream.value.value;
-  SplashController() {
-    userStream.set(AsyncState.data(auth.currentUser));
-
+  SplashController(this.accountRepo) {
     effect(_handleUserChange);
   }
 
@@ -18,7 +18,7 @@ class SplashController {
     if (user == null) {
       navigate(Paths.LOGIN);
     } else {
-      navigate(Paths.HOME);
+      await accountRepo.getAccountTask(user!).map((r) => navigate(Paths.HOME)).run();
     }
   }
 }
