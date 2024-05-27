@@ -9,7 +9,7 @@ import 'package:todo_list/infrastructure/models/iprojects_repository.dart';
 class FirebaseProjectsRepo extends ProjectsRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
-  Stream<List<Project>> getProjects() {
+  Stream<List<Project>> projectStream() {
     return _firestore.projectsCollection.snapshots().map((event) => event.docs.fold(<Project>[], (all, element) {
           try {
             all.add(ProjectModel.fromFirestore(element).toDomain());

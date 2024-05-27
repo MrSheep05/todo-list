@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var homeController = GetIt.instance.get<HomeController>();
     var account = homeController.accountSignal.watch(context);
+    var projectList = homeController.projectsList.watch(context).value;
     return Scaffold(
         bottomNavigationBar: const NavigationFooter(),
         body: Padding(
@@ -28,7 +29,11 @@ class HomePage extends StatelessWidget {
                         name: account?.username,
                         email: account?.email,
                       )),
-                  const Expanded(flex: 2, child: TaskPreview()),
+                  Expanded(
+                      flex: 2,
+                      child: TaskPreview(
+                        projectsList: projectList ?? [],
+                      )),
                   Expanded(flex: 5, child: Column(children: [Text("Recent tasks")]))
                 ],
               ),
