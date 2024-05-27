@@ -10,12 +10,15 @@ class FirebaseProjectsRepo extends ProjectsRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Stream<List<Project>> projectStream() {
-    return _firestore.projectsCollection.snapshots().map((event) => event.docs.fold(<Project>[], (all, element) {
-          try {
-            all.add(ProjectModel.fromFirestore(element).toDomain());
-          } catch (_) {}
-          return all;
-        }));
+    return _firestore.projectsCollection
+        .orderBy("timestamp", descending: true)
+        .snapshots()
+        .map((event) => event.docs.fold(<Project>[], (all, element) {
+              try {
+                all.add(ProjectModel.fromFirestore(element).toDomain());
+              } catch (_) {}
+              return all;
+            }));
   }
 
   @override

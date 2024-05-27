@@ -21,7 +21,7 @@ class TaskController {
   Future<void> createProject() async {
     await DialogAPI().showLoading();
     var nameObject = NameObject(titleController.text.trim());
-    var descriptionObject = DescriptionObject(titleController.text.trim());
+    var descriptionObject = DescriptionObject(descriptionController.text.trim());
     await _createProjectTask(nameObject, descriptionObject).map((_) {
       titleController.clear();
       descriptionController.clear();
