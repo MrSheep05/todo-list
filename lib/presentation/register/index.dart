@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:signals/signals_flutter.dart';
 import 'package:todo_list/controllers/login_controller.dart';
 import 'package:todo_list/core/colors.dart';
 import 'package:todo_list/core/size.dart';
@@ -12,7 +11,7 @@ import 'package:todo_list/presentation/widgets/text_input.dart';
 import 'package:todo_list/routes/paths.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage();
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {

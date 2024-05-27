@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:signals/signals_flutter.dart';
 import 'package:todo_list/controllers/login_controller.dart';
 import 'package:todo_list/core/colors.dart';
 import 'package:todo_list/core/size.dart';
@@ -12,7 +11,7 @@ import 'package:todo_list/presentation/widgets/text_input.dart';
 import 'package:todo_list/routes/paths.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage();
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,13 +72,14 @@ class LoginPage extends StatelessWidget {
                         "Do not have an account? ",
                         style: GoogleFonts.poppins(),
                       ),
-                      InkWell(
-                        onTap: () => navigate(Paths.REGISTER),
-                        child: Text(
-                          "Create one right now!",
-                          style: GoogleFonts.poppins(
-                              color: theme.colorScheme.primary, decoration: TextDecoration.underline),
-                        ),
+                      Expanded(
+                        child: InkWell(
+                            onTap: () => navigate(Paths.REGISTER),
+                            child: Text(
+                              "Create one right now!",
+                              style: GoogleFonts.poppins(
+                                  color: theme.colorScheme.primary, decoration: TextDecoration.underline),
+                            )),
                       )
                     ],
                   )

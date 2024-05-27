@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_list/controllers/task_controller.dart';
 import 'package:todo_list/core/size.dart';
 import 'package:todo_list/presentation/widgets/button.dart';
+import 'package:todo_list/presentation/widgets/single_child_scroll.dart';
 import 'package:todo_list/presentation/widgets/text_input.dart';
 import 'package:todo_list/routes/paths.dart';
 
@@ -14,9 +15,13 @@ class AddTaskPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var taskController = GetIt.instance.get<TaskController>();
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Padding(
             padding: EdgeInsets.all(context.vmin(0.05)),
             child: Center(
+                child: SingleChildScroll(SizedBox(
+              height: context.heightPer(1),
+              width: context.widthPer(1),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -74,6 +79,6 @@ class AddTaskPage extends StatelessWidget {
                       ]))
                 ],
               ),
-            )));
+            )))));
   }
 }

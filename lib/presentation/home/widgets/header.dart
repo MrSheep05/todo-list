@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_list/core/dialog_api.dart';
 import 'package:todo_list/core/size.dart';
-import 'package:todo_list/domain/validated/email.dart';
-import 'package:todo_list/domain/validated/name.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({this.name, this.email, super.key});

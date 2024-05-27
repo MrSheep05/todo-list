@@ -174,7 +174,6 @@
 				C263F52EA939C97C8967017B /* Pods-RunnerTests.release.xcconfig */,
 				FAA62C6329C34FCA9CE15CAC /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -373,7 +372,6 @@
 		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 8;
 			files = (
 			);

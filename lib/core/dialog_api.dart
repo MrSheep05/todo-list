@@ -2,8 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:todo_list/core/colors.dart';
-import 'package:todo_list/core/size.dart';
 import 'package:todo_list/presentation/widgets/loading.dart';
 import 'package:todo_list/presentation/widgets/snackbar_content.dart';
 
@@ -72,7 +70,7 @@ class DialogAPI {
   void _snackBar(String message, Severity severity, Duration duration, String? exception) {
     var isExceptionOnDebugMode = !kReleaseMode && exception != null;
     var errorMessageDependOnReleaseMode = isExceptionOnDebugMode ? exception : message;
-    var errorDurationDependsOnReleaseMode = isExceptionOnDebugMode ? Duration(seconds: 10) : duration;
+    var errorDurationDependsOnReleaseMode = isExceptionOnDebugMode ? const Duration(seconds: 10) : duration;
     if (messengerKey.currentState != null) {
       showing = true;
       Future.delayed(duration, () => showing = false);

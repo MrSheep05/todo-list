@@ -27,7 +27,7 @@ class SnackbarContent extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(context.heightPer(0.025))),
                   boxShadow: [
                     BoxShadow(
-                        color: Color.fromARGB(255, 66, 60, 60).withOpacity(0.5),
+                        color: const Color.fromARGB(255, 66, 60, 60).withOpacity(0.5),
                         blurRadius: 3,
                         spreadRadius: 2,
                         offset: const Offset(0, 3))
