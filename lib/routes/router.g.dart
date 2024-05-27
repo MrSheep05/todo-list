@@ -11,6 +11,7 @@ List<RouteBase> get $appRoutes => [
       $loginRoute,
       $splashRoute,
       $registerRoute,
+      $addTaskRoute,
     ];
 
 RouteBase get $homeRoute => GoRouteData.$route(
@@ -89,6 +90,28 @@ extension $RegisterRouteExtension on RegisterRoute {
 
   String get location => GoRouteData.$location(
         '/register',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $addTaskRoute => GoRouteData.$route(
+      path: '/add_task',
+      factory: $AddTaskRouteExtension._fromState,
+    );
+
+extension $AddTaskRouteExtension on AddTaskRoute {
+  static AddTaskRoute _fromState(GoRouterState state) => const AddTaskRoute();
+
+  String get location => GoRouteData.$location(
+        '/add_task',
       );
 
   void go(BuildContext context) => context.go(location);

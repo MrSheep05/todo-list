@@ -1,22 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todo_list/domain/status.dart';
-import 'package:todo_list/infrastructure/core/date_time.dart';
 
-class StringDateTimeConverter implements JsonConverter<DateTime?, String?> {
+class StringDateTimeConverter implements JsonConverter<DateTime?, Object?> {
   const StringDateTimeConverter();
 
   @override
-  DateTime? fromJson(String? string) {
-    if (string is String) {
-      return DateTime.parse(string);
-    } else {
-      return null;
-    }
+  DateTime? fromJson(Object? string) {
+    return (string as Timestamp?)?.toDate();
   }
 
   @override
-  String? toJson(DateTime? date) {
-    return date?.toDateTimeString();
+  Object? toJson(DateTime? date) {
+    return date != null ? Timestamp.fromDate(date) : FieldValue.serverTimestamp();
   }
 }
 

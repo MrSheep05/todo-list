@@ -3,9 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:todo_list/controllers/home_controller.dart';
 import 'package:todo_list/controllers/login_controller.dart';
 import 'package:todo_list/controllers/splash_controller.dart';
+import 'package:todo_list/controllers/task_controller.dart';
+import 'package:todo_list/infrastructure/models/iprojects_repository.dart';
 import 'package:todo_list/infrastructure/models/istorage_repository.dart';
 import 'package:todo_list/infrastructure/models/iuser_repository.dart';
 import 'package:todo_list/infrastructure/repository/account_repository.dart';
+import 'package:todo_list/infrastructure/repository/projects_repository.dart';
 import 'package:todo_list/infrastructure/repository/storage_repository.dart';
 import 'package:todo_list/routes/router.dart';
 
@@ -17,7 +20,9 @@ void setUp() {
   ));
   getIt.registerSingleton<AccountRepository>(FirebaseAccountRepo());
   getIt.registerSingleton<StorageRepository>(LocalStorageRepo());
+  getIt.registerSingleton<ProjectsRepository>(FirebaseProjectsRepo());
   getIt.registerLazySingleton(() => SplashController(getIt.get(), getIt.get()));
   getIt.registerLazySingleton(() => LoginController(getIt.get()));
-  getIt.registerLazySingleton(() => HomeController(getIt.get()));
+  getIt.registerLazySingleton(() => TaskController(getIt.get()));
+  getIt.registerLazySingleton(() => HomeController(getIt.get(), getIt.get()));
 }

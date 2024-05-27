@@ -8,13 +8,13 @@ import 'package:todo_list/domain/validated/unique_id.dart';
 class Project {
   final UniqueId _id;
   final Name _title;
-  final DateTime timestamp;
+  final DateTime? timestamp;
   final Description _description;
   final TaskStatus status;
   const Project._(this._id, this._title, this._description, this.timestamp, this.status);
 
-  factory Project(UniqueIdObject uniqueIdObject, NameObject nameObject, DateTime timestamp,
-      DescriptionObject descriptionObject, TaskStatus status) {
+  factory Project(UniqueIdObject uniqueIdObject, NameObject nameObject, DescriptionObject descriptionObject,
+      TaskStatus status, DateTime? timestamp) {
     return uniqueIdObject.valueFailureOrUnit
         .andThen(() => nameObject.valueFailureOrUnit)
         .andThen(() => descriptionObject.valueFailureOrUnit)
@@ -25,8 +25,8 @@ class Project {
   }
 
   static TaskOption<Project> createProject(
-      NameObject nameObject, DescriptionObject descriptionObject, DateTime timestamp, TaskStatus status) {
-    return TaskOption.tryCatch(() async => Project(UniqueIdObject(), nameObject, timestamp, descriptionObject, status));
+      NameObject nameObject, DescriptionObject descriptionObject, TaskStatus status) {
+    return TaskOption.tryCatch(() async => Project(UniqueIdObject(), nameObject, descriptionObject, status, null));
   }
 
   String get id => _id.value;

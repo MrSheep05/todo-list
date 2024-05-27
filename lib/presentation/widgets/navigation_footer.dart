@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/colors.dart';
 import 'package:todo_list/core/size.dart';
+import 'package:todo_list/routes/paths.dart';
 
 class NavigationFooter extends StatelessWidget {
   const NavigationFooter({super.key});
@@ -17,7 +18,9 @@ class NavigationFooter extends StatelessWidget {
               backgroundColor: theme.colorScheme.primary,
               child: IconButton(
                 icon: const Icon(Icons.add, color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                  navigate(Paths.ADD_TASK);
+                },
               ))),
     );
   }

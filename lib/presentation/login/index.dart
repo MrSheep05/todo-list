@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
                     errorSignal: loginController.loginError,
                   ),
                   SizedBox(
-                    height: context.vmin(0.1),
+                    height: context.vmin(0.09),
                   ),
                   TextInput(
                     label: "Password",
@@ -51,7 +51,7 @@ class LoginPage extends StatelessWidget {
                     errorSignal: loginController.passwordError,
                   ),
                   SizedBox(
-                    height: context.vmin(0.1),
+                    height: context.vmin(0.09),
                   ),
                   Button(
                     "Continue",

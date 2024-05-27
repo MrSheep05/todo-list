@@ -42,8 +42,8 @@ class ProjectModel with _$ProjectModel {
 
   Project toDomain() {
     try {
-      return Project(UniqueIdObject.fromNullable(id), NameObject.fromNullable(title), timestamp!,
-          DescriptionObject.fromNullable(description), status);
+      return Project(UniqueIdObject.fromNullable(id), NameObject.fromNullable(title),
+          DescriptionObject.fromNullable(description), status, timestamp!);
     } catch (e) {
       throw ConvertDomainModelException("ProjectModel.toDomain error", e);
     }

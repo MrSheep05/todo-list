@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_list/presentation/add_task/index.dart';
 import 'package:todo_list/presentation/home/index.dart';
 import 'package:todo_list/presentation/login/index.dart';
 import 'package:todo_list/presentation/register/index.dart';
@@ -34,4 +35,11 @@ class RegisterRoute extends GoRouteData {
   const RegisterRoute();
   @override
   Widget build(BuildContext context, GoRouterState state) => const RegisterPage();
+}
+
+@TypedGoRoute<AddTaskRoute>(path: Paths.ADD_TASK)
+class AddTaskRoute extends GoRouteData {
+  const AddTaskRoute();
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const AddTaskPage();
 }

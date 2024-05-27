@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:signals/signals_flutter.dart';
 import 'package:todo_list/controllers/login_controller.dart';
 import 'package:todo_list/core/colors.dart';
 import 'package:todo_list/core/size.dart';
@@ -38,6 +39,7 @@ class RegisterPage extends StatelessWidget {
                     hint: "CoolGuy123",
                     controller: loginController.usernameController,
                     errorSignal: loginController.usernameError,
+                    maxLength: 50,
                   ),
                   SizedBox(
                     height: context.vmin(0.1),
@@ -49,7 +51,7 @@ class RegisterPage extends StatelessWidget {
                     errorSignal: loginController.loginError,
                   ),
                   SizedBox(
-                    height: context.vmin(0.1),
+                    height: context.vmin(0.09),
                   ),
                   TextInput(
                     label: "Password",
@@ -59,14 +61,14 @@ class RegisterPage extends StatelessWidget {
                     errorSignal: loginController.passwordError,
                   ),
                   SizedBox(
-                    height: context.vmin(0.1),
+                    height: context.vmin(0.09),
                   ),
                   Button(
                     "Continue",
                     onPressed: loginController.registerIn,
                   ),
                   SizedBox(
-                    height: context.vmin(0.1),
+                    height: context.vmin(0.09),
                   ),
                   const CustomDivider(
                     message: "Or",

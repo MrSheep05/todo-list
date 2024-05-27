@@ -7,6 +7,7 @@ class Paths {
   static const String LOGIN = '/login';
   static const String SPLASH = '/';
   static const String REGISTER = '/register';
+  static const String ADD_TASK = '/add_task';
 }
 
 void navigate(String path) {

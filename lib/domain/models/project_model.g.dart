@@ -13,8 +13,7 @@ _$ProjectModelImpl _$$ProjectModelImplFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String?,
       status:
           const StringTaskStatusConverter().fromJson(json['status'] as String?),
-      timestamp: const StringDateTimeConverter()
-          .fromJson(json['timestamp'] as String?),
+      timestamp: const StringDateTimeConverter().fromJson(json['timestamp']),
     );
 
 Map<String, dynamic> _$$ProjectModelImplToJson(_$ProjectModelImpl instance) =>
